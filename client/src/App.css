@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   display: flex;
   justify-content: center;
@@ -20,7 +24,7 @@
   z-index: 10000;
 }
 
-.alert-box.critical {
+.alert-box.critical, .alert-box.error {
   background-color: #f1c2c0;
   color: #b4302b;
 }
@@ -42,3 +46,68 @@ button.close {
   outline: 0;
   cursor: pointer;
 }
+
+.metrics {
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.metric {
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 4px;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 200px;
+  box-shadow: 0 8px 18px -10px rgba(150,170,180,0.5);
+}
+
+.metric h3 {
+  margin: 0;
+  font-size: 40px;
+  display: inline-block;
+}
+
+.metric p {
+  text-transform: uppercase;
+  font-size: 14px;
+  margin: 10px;
+  font-weight: 600;
+}
+
+.metric .times {
+  font-size: 25px;
+}
+
+.metric ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 5px;
+  text-align: start;
+  background-color: #f5f7f9;
+  border-radius: 4px;
+}
+
+.metric ul li {
+  margin: 5px;
+}
+
+.metric.current {
+  color: #0e97d2
+}
+
+.metric.overload {
+  color: #b4302b;
+}
+
+.metric.recover {
+  color: #5d8009; 
+}
+
+
+

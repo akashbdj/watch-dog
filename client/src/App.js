@@ -3,6 +3,7 @@ import Recharts from './components/Recharts'
 import { getInitialLoads } from './utils'
 import StateMachine from "./stateMachine"
 import Alert from './components/Alert'
+import Metrics from './components/Metrics'
 import './App.css'
 import {
     POLL_INTERVAL_IN_SEC,
@@ -59,11 +60,16 @@ export default class App extends Component {
         this.setState((prevState) => this.getNewState(prevState, data))
     }
 
+    handleFetchLoadError(e) {
+        console.log("Error in fetching load from the server: ", e)
+        this.setState({ showAlert: true, alertType: 'fetchError' })
+    }
+
     fetchLoadAvg() {
         fetch(LOAD_ENDPOINT)
             .then((res) => res.json())
             .then((data) => this.handleFetchLoadSuccess(data))
-            .catch((e) => console.log("Error in fetching load from the server: ", e))
+            .catch((e) => this.handleFetchLoadError(e))
     }
 
     getAlertData() {
@@ -78,7 +84,10 @@ export default class App extends Component {
         return (
             <div className="App">
                 {this.state.showAlert && <Alert {...this.getAlertData()} onCloseClick={this.handleAlertCloseClick} />}
-                <Recharts {...this.state} />
+                <div className="container">
+                    <Recharts {...this.state} />
+                    <Metrics {...this.state} />
+                </div>
             </div>
         )
     }

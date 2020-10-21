@@ -13,6 +13,10 @@ export const ALERT_INFO = {
     recovered: {
         className: 'recovered',
         message: 'System has recovered!'
+    },
+    fetchError: {
+        className: 'error',
+        message: 'Error in fetching load from server'
     }
 }
 
