@@ -1,0 +1,44 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  margin: 150px;
+  height: 400px;
+  width: 80%;
+}
+
+.alert-box {
+  position: fixed;
+  padding: 11px 50px 11px 15px;
+  top: 50px;
+  right: 50px;
+  border-radius: 4px;
+  z-index: 10000;
+}
+
+.alert-box.critical {
+  background-color: #f1c2c0;
+  color: #b4302b;
+}
+
+.alert-box.recovered {
+  background-color: #d1e0c8;
+  color: #5d8009;
+}
+
+button.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 20px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #494a4a;
+  outline: 0;
+  cursor: pointer;
+}
