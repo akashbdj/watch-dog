@@ -40,7 +40,7 @@ function Metric({ className, data, type }) {
             <p>{count > 1 ? 'times' : 'time'} {type} in last 10 mins</p>
             <ul>
                 {data.map(({ start, end }, idx) => {
-                    return <li key={type}>{formatTime(start)} - {formatTime(end)}</li>
+                    return <li key={`${type}-${end}`}>{formatTime(start)} - {formatTime(end)}</li>
                 })}
             </ul>
         </div>
