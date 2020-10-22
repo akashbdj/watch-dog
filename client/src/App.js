@@ -50,7 +50,7 @@ export default class App extends Component {
         }
 
         const context = this.machine.dispatch(action, payload).getContext()
-        let newLoadAvgs = [...prevState.loadAvgs, data]
+        let newLoadAvgs = [...loadAvgs, data]
         newLoadAvgs = newLoadAvgs.length > CAPACITY ? newLoadAvgs.slice(1) : newLoadAvgs
 
         return {
