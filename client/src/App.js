@@ -41,11 +41,9 @@ export default class App extends Component {
         let { loadAvgs, showAlert, alertType } = prevState
         const currentLoad = data.loads[0]
         const currentLoadTime = data.time
-        const prevLoadTime = loadAvgs[loadAvgs.length - 1].time
 
         const action = currentLoad > 1 ? 'HIGH' : 'LOW'
         const payload = {
-            prevTime: prevLoadTime,
             curTime: currentLoadTime,
             onRecovery: () => { showAlert = true; alertType = 'recovered' },
             onCritical: () => { showAlert = true; alertType = 'critical' }

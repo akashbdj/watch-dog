@@ -79,7 +79,7 @@ State Machine manages the state of our system. We start our machine in Normal st
 
 **LOW** means the load is < 1
 
-When we receive a load from the server, an appropriate action is fired along with the payload. Based on the action and payload, the machine may transition to some other state or stay in the same state.
+When we receive a load from the server, an appropriate action is dispatched along with the payload. Based on the action and payload, the machine may transition to some other state or stay in the same state.
 
 ### Persistance
 I've used Local Storage to store all the data and the state of the machine for the current 10 minutes window. The application will persist state across browser refreshes.
