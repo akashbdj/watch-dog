@@ -22,15 +22,16 @@ server
 ## Usage instructions
 Clone this repo, install the packages, fire up the servers and you should be good to go!
 
+To start the backend server: 
+```
+cd server && npm install && npm start
+```
+
 To start the frontend server: 
 ```
 cd client && yarn && yarn start
 ```
 
-To start the backend server: 
-```
-cd server && npm install && npm start
-```
 
 Frontend application listens at `http://localhost:3000/`
 
