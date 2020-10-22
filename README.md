@@ -12,7 +12,7 @@ client
 |    ├── App.css
 |    ├── constants.js
 |    └── App.js
-|    └── utils
+|    └── utils.js
 |    └── package.json
 server
 └── index.js
@@ -51,17 +51,17 @@ cd client && yarn test -- --coverage
 
 ## Design
 At any moment, the system can be in one of the 3 states:
-1. NORMAL
-2. CRITICAL
-3. RECOVERING
+1. Normal
+2. Critical
+3. Recovering
 
-**NORMAL**: When the system is running smoothly with `Avg. CPU Load < 1 ` for **atleast 2 mins**. **Note:** Recovered system is considered as NORMAL only.
+**Normal**: When the system is running smoothly with `Avg. CPU Load < 1 ` for atleast 2 mins. **Note:** Recovered system is considered as Normal only.
 
-**CRITICAL**: When the `Avg CPU Load > 1` for **atleast 2 mins**.
+**Critical**: When the `Avg CPU Load > 1` for atleast 2 mins.
 
-**RECOVERING**: When the system is at **CRITICAL** state, and immediately a `Avg. CPU Load` drops below **1**, the machine goes into **RECOVERING** state. The System **may or may not** recover after this dip, but it seems like a potential candidate for recovery. Now if we see a `Avg. CPU Load > 1` at any point during recovery, the system again goes back to **CRITICAL** state. If no high load is seen for **atleast 2 mins**, the system is considered as *recovered* and it moves to **NORMAL** state.
+**Recovering**: When the system is at Critical state, and immediately a `Avg. CPU Load` drops below 1, the machine goes into Recovering state. The System **may or may not** recover after this dip, but it seems like a potential candidate for recovery. Now if we see a `Avg. CPU Load > 1` at any point during recovery, the system again goes back to Critical state. If no high load is seen for atleast 2 mins, the system is considered as *recovered* and it moves to Normal state.
 
-Transitioning from one state to another is managed by **State Machine**.
+Transitioning from one state to another is managed by State Machine.
 
 
 ### State Machine:
@@ -70,9 +70,10 @@ Transitioning from one state to another is managed by **State Machine**.
 currentState => (action, payload) => nextState
 ```
 
-State Machine manages the state of our system. We start our machine at **NORMAL** state. Each state can have 2 actions: **HIGH** and **LOW**.
+State Machine manages the state of our system. We start our machine at Normal state. Each state can have 2 actions: **HIGH** and **LOW**.
 
 **HIGH** means a system is under heavy load(>1).
+
 **LOW** means the load is < 1
 
 When we receieve a load from the server, an appropriate action is fired along with the payload. Based on the action and payload, the machine may transition to some other state or stay at same state.
