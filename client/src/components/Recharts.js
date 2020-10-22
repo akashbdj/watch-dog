@@ -1,7 +1,6 @@
 import React from 'react'
 import { scaleTime, } from "d3-scale"
 import { timeMinute } from 'd3-time'
-import moment from 'moment'
 import { CHART_AREA_CONFIG } from '../constants'
 import { formatTime } from '../utils'
 import {

@@ -10,17 +10,21 @@ export const STATES = {
     RECOVERING: 'RECOVERING'
 }
 
+let defaultContext = {
+    highLoadStartTime: null,
+    recoveryStartTime: null,
+    recoveryZones: [],
+    criticalZones: []
+}
 
 export default class StateMachine {
-    constructor() {
-        this.context = {
-            highLoadStartTime: null,
-            recoveryStartTime: null,
-            recoveryZones: [],
-            criticalZones: []
-        }
+
+    // Cases where you want to init the machine with some data and state
+    // like: localStorage - preseve the state of machine + its context
+    constructor({ context, machineState } = {}) {
+        this.context = Object.assign({}, defaultContext, context)
         this.machine = {
-            currentState: STATES.NORMAL,
+            currentState: machineState || STATES.NORMAL,
             states: {
                 NORMAL: {
                     LOW: ({ curTime }) => {

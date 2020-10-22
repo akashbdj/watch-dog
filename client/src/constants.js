@@ -4,6 +4,7 @@ export const CAPACITY = ~~(WINDOW_SIZE_IN_MIN * 60) / POLL_INTERVAL_IN_SEC
 export const HIGH_LOAD_THRESHOLD_MILLISEC = 2 * 60 * 1000
 export const RECOVERY_THRESHOLD_MILLISEC = 2 * 60 * 1000
 export const LOAD_ENDPOINT = 'http://localhost:3001'
+export const LS_KEY = 'watchDog'
 
 export const ALERT_INFO = {
     critical: {

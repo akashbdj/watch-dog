@@ -14,14 +14,13 @@ app.get('/', (req, res) => {
   const cpus = os.cpus().length
   const loadAvgs = os.loadavg().map((avg) => (avg / cpus).toFixed(2))
 
-
-
   console.log("current: ", c)
-  if (c === 12) {
+  if (c === 7) {
     res.send({
       loads: [((Math.random() / 1.5) + 2), Math.random() / 2, Math.random() / 3],
       time: new Date().getTime()
     })
+
 
     if (!timerId) {
       timerId = setInterval(() => {
@@ -32,15 +31,13 @@ app.get('/', (req, res) => {
     }
 
     return
-
   }
 
-  if (c === 2 || c == 25 || c == 70) {
+  if (c === 2 || c == 18 || c == 70) {
     res.send({
       loads: [Math.random() / 2 + 1, Math.random() / 2, Math.random() / 3],
       time: new Date().getTime()
     })
-
 
     if (!timerId) {
       timerId = setInterval(() => {

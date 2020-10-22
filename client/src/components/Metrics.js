@@ -1,7 +1,5 @@
 import React from 'react'
 import { last, formatTime } from '../utils'
-import moment from 'moment'
-
 
 export default function Metrics(props) {
     const { loadAvgs, context: { recoveryZones, criticalZones } } = props
@@ -25,33 +23,24 @@ function CurrentLoadAvg({ loads }) {
 }
 
 function Overloaded({ criticalZones }) {
-    const count = criticalZones.length
-    if (!count) return null
-
-    return (
-        <div className='metric overload'>
-            <h3>{count}</h3>
-            <p>{count > 1 ? 'times' : 'time'} Overloaded in last 10 mins</p>
-            <ul>
-                {criticalZones.map(({ start, end }, idx) => {
-                    return <li>{formatTime(start)} - {formatTime(end)}</li>
-                })}
-            </ul>
-        </div>
-    )
+    return <Metric data={criticalZones} className='overload' type='Overloaded' />
 }
 
 function Recovered({ recoveryZones }) {
-    const count = recoveryZones.length
+    return <Metric data={recoveryZones} className='recover' type='Recover' />
+}
+
+function Metric({ className, data, type }) {
+    const count = data.length
     if (!count) return null
 
     return (
-        <div className='metric recover'>
+        <div className={`metric ${className}`}>
             <h3>{count}</h3>
-            <p>{count > 1 ? 'times' : 'time'} Recovered in last 10 mins</p>
+            <p>{count > 1 ? 'times' : 'time'} {type} in last 10 mins</p>
             <ul>
-                {recoveryZones.map(({ start, end }, idx) => {
-                    return <li>{formatTime(start)} - {formatTime(end)}</li>
+                {data.map(({ start, end }, idx) => {
+                    return <li key={type}>{formatTime(start)} - {formatTime(end)}</li>
                 })}
             </ul>
         </div>

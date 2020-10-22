@@ -1,28 +1,38 @@
 import React, { Component } from 'react'
 import Recharts from './components/Recharts'
-import { getInitialLoads } from './utils'
 import StateMachine from "./stateMachine"
 import Alert from './components/Alert'
 import Metrics from './components/Metrics'
 import './App.css'
 import {
-    POLL_INTERVAL_IN_SEC,
+    isEmpty,
+    getInitialLoads,
+    storeInLocalStorage,
+    getFromLocalStorage
+} from './utils'
+import {
+    LS_KEY,
     CAPACITY,
+    ALERT_INFO,
     LOAD_ENDPOINT,
-    ALERT_INFO
+    POLL_INTERVAL_IN_SEC,
 } from './constants'
 
 export default class App extends Component {
     constructor(props) {
         super(props)
-        this.machine = new StateMachine()
+
+        const storedState = Object.assign({}, getFromLocalStorage(LS_KEY))
+        this.machine = new StateMachine(storedState)
         this.timerId = null
-        this.state = {
-            showAlert: false,
-            alertType: null,
-            context: this.machine.getContext(),
-            loadAvgs: getInitialLoads(CAPACITY)
-        }
+        this.state = !isEmpty(storedState)
+            ? storedState
+            : {
+                showAlert: false,
+                alertType: null,
+                context: this.machine.getContext(),
+                loadAvgs: getInitialLoads(CAPACITY)
+            }
 
         this.handleAlertCloseClick = this.handleAlertCloseClick.bind(this)
     }
@@ -49,6 +59,7 @@ export default class App extends Component {
             showAlert,
             alertType,
             loadAvgs: newLoadAvgs,
+            machineState: this.machine.getState(),
             context: {
                 ...context,
                 ...(this.machine.getFilteredZones(newLoadAvgs[0].time)), // newLoadAvgs[0].time is current window start time
@@ -57,7 +68,9 @@ export default class App extends Component {
     }
 
     handleFetchLoadSuccess(data) {
-        this.setState((prevState) => this.getNewState(prevState, data))
+        this.setState((prevState) => this.getNewState(prevState, data), () => {
+            storeInLocalStorage(LS_KEY, this.state)
+        })
     }
 
     handleFetchLoadError(e) {
