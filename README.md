@@ -40,14 +40,16 @@ Backend server listens at `http://localhost:3001/`
 ## Run tests
 
 ```
-cd client && yarn test -- --coverage
+cd client && yarn test --coverage --watchAll
 ```
 
 ## Tech Stack
 1. React (Create-React-App)
-2. Node(> v10) + Express backend with nodemon for watching changes
+2. Node + Express backend with nodemon for watching changes
 3. [Recharts](https://recharts.org/en-US/)
 4. Moment.js to work with time
+
+Note: Node >= v10 is required.
 
 ## Design
 At any moment, the system can be in one of the 3 states:
@@ -84,7 +86,7 @@ The entire **Under High Load** and **Recovery** logic is built using **State Mac
 It's been tested thoroughly and all the test cases are present inside `client/src/tests/stateMachine.test.js`. You can run them:
 
 ```
-cd clients && yarn test -- --coverage
+cd client && yarn test --coverage --watchAll
 ```
 
 Besides State Machine, I've also added a few test cases for utility methods.
