@@ -27,7 +27,7 @@ function Overloaded({ criticalZones }) {
 }
 
 function Recovered({ recoveryZones }) {
-    return <Metric data={recoveryZones} className='recover' type='Recover' />
+    return <Metric data={recoveryZones} className='recover' type='Recovered' />
 }
 
 function Metric({ className, data, type }) {
