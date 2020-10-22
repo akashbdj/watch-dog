@@ -50,16 +50,18 @@ cd client && yarn test -- --coverage
 4. Moment.js to work with time
 
 ## Design
-At any moment, the system can be in any of the 3 states:
+At any moment, the system can be in one of the 3 states:
 1. NORMAL
 2. CRITICAL
 3. RECOVERING
 
-**NORMAL**: When the system is running smoothly under `CPU Load Avg < 1 ` for **atleast 2 mins**. **Note:** Recovered system is considered as NORMAL only.
+**NORMAL**: When the system is running smoothly with `Avg. CPU Load < 1 ` for **atleast 2 mins**. **Note:** Recovered system is considered as NORMAL only.
 
 **CRITICAL**: When the `Avg CPU Load > 1` for **atleast 2 mins**.
 
-**RECOVERING**: When the system is at CRITICAL state, and immediately a load avg drops below 1, the machine goes into RECOVERING state. The System **may or may not** recover after this dip, but this seems like a potential candidate for recovery. Now if we see a high load of > 1 at any point during recovery, the system goes back to CRITICAL state. If no high load is seen for atleast 2 mins, the system is considered as recovered and it moves to NORMAL state.
+**RECOVERING**: When the system is at **CRITICAL** state, and immediately a `Avg. CPU Load` drops below **1**, the machine goes into **RECOVERING** state. The System **may or may not** recover after this dip, but it seems like a potential candidate for recovery. Now if we see a `Avg. CPU Load > 1` at any point during recovery, the system again goes back to **CRITICAL** state. If no high load is seen for **atleast 2 mins**, the system is considered as *recovered* and it moves to **NORMAL** state.
+
+Transitioning from one state to another is managed by **State Machine**.
 
 
 ### State Machine:
@@ -68,7 +70,10 @@ At any moment, the system can be in any of the 3 states:
 currentState => (action, payload) => nextState
 ```
 
-State Machine manages the state of our system. We start our machine at NORMAL state. Each state can have 2 actions: **HIGH** and **LOW**. HIGH means a system is under heavy load(>1) and LOW means the load is < 1.
+State Machine manages the state of our system. We start our machine at **NORMAL** state. Each state can have 2 actions: **HIGH** and **LOW**.
+
+**HIGH** means a system is under heavy load(>1).
+**LOW** means the load is < 1
 
 When we receieve a load from the server, an appropriate action is fired along with the payload. Based on the action and payload, the machine may transition to some other state or stay at same state.
 
@@ -78,3 +83,6 @@ The entire **Under High Load** and **Recovery** logic is built using **State Mac
 It's been tested thoroughly and all the test cases are present inside `client/src/tests/stateMachine.test.js`
 
 Besides State Machine, I've also added a few test cases for utility methods.
+
+
+### Improvements/Missing
